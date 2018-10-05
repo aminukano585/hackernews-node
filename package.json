@@ -1,0 +1,13 @@
+{
+  "name": "hackernews-node",
+  "version": "1.0.0",
+  "description": "hackernews clone built with GraphQL",
+  "main": "index.js",
+  "repository": "git@github.com:AminuSufi585/hackernews-node.git",
+  "author": "Aminu Ibrahim Abubakar <aminukano585@gmail.com> (https://aminukano.herokuapp.com/)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "graphql-yoga": "1.16.2"
+  }
+}

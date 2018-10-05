@@ -1,20 +1,8 @@
 const { GraphQLServer } = require('graphql-yoga');
+const links = require('./data');
 
-let links = [
-  {
-    id: 'link-0',
-    url: 'www.howtographql.com',
-    description: 'Fullstack tutorial for GraphQL'
-  },
-  {
-    id: 'link-1',
-    url: 'https://github.com/prisma/graphql-yoga',
-    description: 'Fully-featured GraphQL Server with focus on easy setup'
-  }
-];
 let idCount = links.length;
 
-// 2
 const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
@@ -47,7 +35,6 @@ const resolvers = {
   },
 }
 
-// 3
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,

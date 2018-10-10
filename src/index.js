@@ -1,43 +1,38 @@
 const { GraphQLServer } = require('graphql-yoga');
-const links = require('./data');
-
-let idCount = links.length;
+const { Prisma } = require('prisma-binding');
+require('dotenv').config();
 
 const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
-    feed: () => links,
-    link: (_, args) => {
-      return links[args.id.slice(5)];
+    feed: (root, args, context, info) => {
+      return context.db.query.links({}, info);
     },
   },
   Mutation: {
-    post: (root, args) => {
-      const link = {
-        id: `link-${idCount++}`,
-        url: args.url,
-        description: args.description,
-      };
-      links.push(link);
-      return link
+    post: (root, args, context, info) => {
+      return context.db.mutation.createLink({
+        data: {
+          url: args.url,
+          description: args.description,
+        },
+      }, info);
     },
-    updateLink: (_, args) => {
-      links[args.id.slice(5)] = {
-        id: args.id,
-        url: args.url,
-        description: args.description
-      };
-      return links[args.id.slice(5)];
-    },
-    deleteLink: (_, args) => {
-      return links.splice(links[args.id.slice(5)], 1)[0];
-    }
   },
 }
 
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
+  context: req => ({
+    ...req,
+    db: new Prisma({
+      typeDefs: 'src/generated/prisma.graphql',
+      endpoint: process.env.ENDPOINT,
+      secret: process.env.SECRET,
+      debug: true,
+    }),
+  }),
 });
 
 server.start(() => console.log(`Server is running on http://localhost:4000`));

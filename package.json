@@ -8,6 +8,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "graphql-yoga": "1.16.2"
+    "dotenv": "^6.1.0",
+    "graphql-yoga": "1.16.2",
+    "prisma-binding": "^2.1.6"
   }
 }

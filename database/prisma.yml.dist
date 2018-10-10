@@ -1,0 +1,15 @@
+# Rename this file to prisma.yml
+# The HTTP endpoint  for your Prisma API
+endpoint: YOUR_ENDPOINT
+
+
+# Points to then file that holds your data model
+datamodel: datamodel.graphql
+
+# Deploy hook
+hooks:
+  post-deploy:
+    - graphql get-schema --project database
+
+# You can only access the API when providing JWTs that are signed with this secret
+secret: YOUR_SECRET_KEY
